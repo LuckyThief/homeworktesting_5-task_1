@@ -1,6 +1,6 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import com.codeborne.selenide.logevents.SelenideLogger;
+import io.qameta.allure.selenide.AllureSelenide;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.Keys;
 
 import java.time.Duration;
@@ -10,10 +10,20 @@ import static com.codeborne.selenide.Selenide.*;
 
 public class AppCardDeliveryTest {
 
+    @BeforeAll
+    static void setUpAll() {
+        SelenideLogger.addListener("allure", new AllureSelenide());
+    }
+    @AfterAll
+    static void tearDownAll() {
+        SelenideLogger.removeListener("allure");
+    }
+
     @BeforeEach
     void setup() {
         open("http://localhost:9999");
     }
+
 
     @Test
     @DisplayName("Should successful plan and replan meeting")
